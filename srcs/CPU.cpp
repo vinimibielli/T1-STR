@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "CPU.h"
+#include "./include/CPU.h"
 #include <vector>
 
 Cpu::Cpu()

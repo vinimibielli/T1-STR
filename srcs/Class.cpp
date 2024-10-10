@@ -1,4 +1,4 @@
-#include "Class.h"
+#include "./include/Class.h"
 
 Periodicas::Periodicas(int computacao, int periodo, int deadline, char letra, int pid){
     this->computacao = computacao;

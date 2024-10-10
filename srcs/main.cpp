@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "CPU.h"
+#include "./include/CPU.h"
 
 std::vector<Periodicas> ordeningPeriodicas(std::vector<Periodicas> periodicas)
 {
@@ -113,14 +113,20 @@ int main()
     cpu = Cpu();
 
     for(int j = 0; j < total[i].second.first.size(); j++){
-        std::cout << "Tarefa " << total[i].second.first[j].getLetra() << ": (" << total[i].second.first[j].getComputacao() << ", " << total[i].second.first[j].getPeriodo() << ", " << total[i].second.first[j].getDeadline() << ")" << std::endl;
+        std::cout << "Tarefa " << total[i].second.first[j].getLetra() << "(" << total[i].second.first[j].getPid() << ") : (" << total[i].second.first[j].getComputacao() << ", " << total[i].second.first[j].getPeriodo() << ", " << total[i].second.first[j].getDeadline() << ")" << std::endl;
     }
 
     for(int j = 0; j < total[i].second.second.size(); j++){
         std::cout << "Tarefa " << total[i].second.second[j].getLetra() << ": (" << total[i].second.second[j].getComputacao() << ", " << total[i].second.second[j].getChegada() << ")" << std::endl;
     }
+    int pidAux;
+    if(total[i].second.second.size() > 0){
+        pidAux = total[i].second.second[total[i].second.second.size() - 1].getPid();
+    } else {
+        pidAux = total[i].second.first[total[i].second.first.size() - 1].getPid();
+    }
 
-	cpu.execute(total[i].second.first, total[i].second.second, total[i].first, total[i].second.second[0].getPid());
+	cpu.execute(total[i].second.first, total[i].second.second, total[i].first, pidAux);
 
 	std::cout << cpu.getGrid() << std::endl;
 	std::cout << cpu.getNumPreemp() << " " << cpu.getNumContSwitch() << std::endl;
@@ -131,5 +137,6 @@ int main()
     }
 
 	return 0;
+
     }
 
