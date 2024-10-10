@@ -100,7 +100,7 @@ void Cpu::execute(std::vector<Periodicas> periodicas, std::vector<Aperiodicas> a
             if (tempo % periodicas[i].getPeriodo() == 0 && tempo != 0)
             {
                 //std::cout << "Preempcao da tarefa " << periodicas[i].getLetra() << std::endl;
-                if (periodicas[i].getPeriodo() < TP[0].second.getPeriodo() && TP.size() != 0)
+                if (periodicas[i].getPeriodo() <= TP[0].second.getPeriodo() && TP.size() != 0)
                 {
                     TP.insert(TP.begin(), std::make_pair(std::make_pair(0, 0), periodicas[i]));
                     tag++;
