@@ -53,11 +53,10 @@ int main()
     int numTP, numTA, tempo, computacao, periodo, deadline, chegada;
     char letra = 'A';
     Cpu cpu;
+    int pid = 0;
 
     std::cout << "Digite o tempo total de execucao, o numero de tarefas periodicas e o numero de tarefas aperiodicas: " << std::endl;
     std::cin >> tempo >> numTP >> numTA;
-
-    std::string caminho(tempo, '.');
 
     if (numTP == 0 && numTA == 0)
     {
@@ -77,9 +76,10 @@ int main()
                 i--;
                 continue;
             }
-            Periodicas p(computacao, periodo, deadline, letra);
+            Periodicas p(computacao, periodo, deadline, letra, pid);
             periodicas.push_back(p);
             letra++;
+            pid++;
         }
     }
 
@@ -89,17 +89,16 @@ int main()
 
         for (int i = 0; i < numTA; i++)
         {
-            std::cin >> computacao >> chegada;
-            Aperiodicas a(computacao, chegada, letra);
+            std::cin >> chegada >> computacao;
+            Aperiodicas a(chegada, computacao, letra, pid);
             aperiodicas.push_back(a);
             letra++;
+            pid++;
         }
     }
 
     std::vector<Periodicas> ordenadasTP = ordeningPeriodicas(periodicas);
     std::vector<Aperiodicas> ordenadasTA = ordeningAperiodicas(aperiodicas);
-
-    std::cout << aperiodicas[0].getLetra() << std::endl;
 
     for(int i = 0; i < periodicas.size(); i++){
         std::cout << "Tarefa " << periodicas[i].getLetra() << ": (" << periodicas[i].getComputacao() << ", " << periodicas[i].getPeriodo() << ", " << periodicas[i].getDeadline() << ")" << std::endl;
@@ -109,44 +108,42 @@ int main()
         std::cout << "Tarefa " << aperiodicas[i].getLetra() << ": (" << aperiodicas[i].getComputacao() << ", " << aperiodicas[i].getChegada() << ")" << std::endl;
     }
 
-	cpu.execute(ordenadasTP, ordenadasTA);
+	cpu.execute(ordenadasTP, ordenadasTA, tempo, pid);
 
-	cpu.load((0<<5)|0,'A',4,10);
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.load((0<<5)|1,'B',8,20);
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.load((1<<5)|0,'A',4,20);
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.run();
-	cpu.load((0<<5)|1,'B',2,20);
-	cpu.run();
-	cpu.run();
-	cpu.load((0<<5)|2,'C',1,-1);
-	cpu.run();
-	cpu.load((0<<5)|3,'D',1,-1);
-	cpu.run();
-	cpu.load(26,'.',100000,-1);
-	cpu.run();
-	cpu.run();
-	cpu.load((2<<5)|0,'A',4,30);
+	// cpu.load((0<<5)|0,'A',4,10);
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.load((0<<5)|1,'B',8,20);
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.load((1<<5)|0,'A',4,20);
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.run();
+	// cpu.load((0<<5)|1,'B',2,20);
+	// cpu.run();
+	// cpu.run();
+	// cpu.load((0<<5)|2,'C',1,-1);
+	// cpu.run();
+	// cpu.load((0<<5)|3,'D',1,-1);
+	// cpu.run();
+	// cpu.load(26,'.',100000,-1);
+	// cpu.run();
+	// cpu.run();
+	// cpu.load((2<<5)|0,'A',4,30);
 
 
 
-	//std::cout << cpu.getGrid() << std::endl;
-	//std::cout << cpu.getNumContSwitch() << " " << cpu.getNumPreemp() << std::endl;
+	std::cout << cpu.getGrid() << std::endl;
+	std::cout << cpu.getNumContSwitch() << " " << cpu.getNumPreemp() << std::endl;
 
 	return 0;
-
-    std::cout << caminho << std::endl;
     }
 
