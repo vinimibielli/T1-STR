@@ -81,7 +81,6 @@ void Cpu::execute(std::vector<Periodicas> periodicas, std::vector<Aperiodicas> a
     std::vector <std::pair<std::pair<int, int>, char>> gridTempos; 
     int tempo = 0;
     int tag = pid;
-    bool flag = false;
     for (int i = 0; i < periodicas.size(); i++)
     {
         TP.push_back(std::make_pair(std::make_pair(0, 0), periodicas[i]));
@@ -99,18 +98,16 @@ void Cpu::execute(std::vector<Periodicas> periodicas, std::vector<Aperiodicas> a
         {
             if (tempo % periodicas[i].getPeriodo() == 0 && tempo != 0)
             {
-                //std::cout << "Preempcao da tarefa " << periodicas[i].getLetra() << std::endl;
-                if (periodicas[i].getPeriodo() <= TP[0].second.getPeriodo() && TP.size() != 0)
+                std::cout << "Preempcao da tarefa " << periodicas[i].getLetra() << std::endl;
+                if (periodicas[i].getPeriodo() <= TP[0].second.getPeriodo() && TP.size() != 0 && periodicas[i].getLetra() != TP[0].second.getLetra())
                 {
                     TP.insert(TP.begin(), std::make_pair(std::make_pair(0, 0), periodicas[i]));
                     tag++;
                     TP[1].second.setPid(tag);
-                }
-                else
+                } else
                 {
                     TP.push_back(std::make_pair(std::make_pair(0, 0), periodicas[i]));
                 }
-                flag = true;
             }
         }
 
@@ -118,7 +115,7 @@ void Cpu::execute(std::vector<Periodicas> periodicas, std::vector<Aperiodicas> a
         {
             load(TP[0].second.getPid(), TP[0].second.getLetra(), TP[0].second.getComputacao(), TP[0].second.getDeadline(), TP[0].first.first);
             run(TP[0].first.second);
-            //std::cout << "Tarefa " << TP[0].second.getLetra() << " executada" << std::endl;
+            std::cout << "Tarefa " << TP[0].second.getLetra() << " executada" << std::endl;
             TP[0].first.first++;
         
 
@@ -143,7 +140,7 @@ void Cpu::execute(std::vector<Periodicas> periodicas, std::vector<Aperiodicas> a
 
                 load(TA[0].second.getPid(), TA[0].second.getLetra(), TA[0].second.getComputacao(), 30, TA[0].first);
                 run(TA[0].first);
-                //std::cout << "Tarefa " << TA[0].second.getLetra() << " executada" << std::endl;
+                std::cout << "Tarefa " << TA[0].second.getLetra() << " executada" << std::endl;
                 TA[0].first++;
                 if(TA[0].first == TA[0].second.getComputacao()){
                     for(int i = 0; i < gridTempos.size(); i++){
