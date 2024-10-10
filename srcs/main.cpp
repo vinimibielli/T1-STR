@@ -108,8 +108,6 @@ int main()
 
     }
 
-    std::cout << "Total de tarefas: " << total.size() << std::endl;
-
     for(int i = 0; i < total.size(); i++){
 
     cpu = Cpu();
@@ -129,6 +127,7 @@ int main()
     for(auto i : cpu.getgridTempo()){
         std::cout << i.second << " (" << i.first.first << " " << i.first.second << ")" << std::endl;
     }
+    std::cout << std::endl;
     }
 
 	return 0;
